@@ -5,7 +5,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddDbContext<PizzaDb>(options => options.UseInMemoryDatabase("items"));
+var connectionString = builder.Configuration.GetConnectionString("Pizzas") ?? "Data Source=Pizzas.db";
+builder.Services.AddSqlite<PizzaDb>(connectionString);
 
 builder.Services.AddSwaggerGen(c =>
   {
